@@ -7,7 +7,7 @@ const app = require("../app");
 describe("POST /", function () {
   test("valid", async function () {
     const resp = await request(app).post("/shipments").send({
-        productId: 1,
+        productId: 1000,
         name: "Sam",
         addr: "123 Main St",
         zip: "94102"
@@ -27,7 +27,7 @@ describe("POST /", function () {
     const resp = await request(app)
       .post("/shipments")
       .send({
-          productId: 1,
+          productId: 1000,
           name: 5,
           addr: "123 Main St",
           zip: "94102"
