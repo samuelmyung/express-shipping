@@ -1,19 +1,27 @@
 "use strict";
 
+// this is what we're mocking away
+const shipitApi = require("../shipItApi");
+shipitApi.shipProduct = jest.fn();
+
 const request = require("supertest");
 const app = require("../app");
 
-
 describe("POST /", function () {
   test("valid", async function () {
+    // setting shipProduct to 1 (mocking shipProduct function)
+    shipitApi.shipProduct.mockReturnValue(1);
+
+    // testing our route but shipProduct is 1
     const resp = await request(app).post("/shipments").send({
         productId: 1000,
         name: "Sam",
         addr: "123 Main St",
         zip: "94102"
- });
+    });
 
-    expect(resp.body).toEqual({ shipped: expect.any(Number) });
+    // get value as 1
+    expect(resp.body).toEqual({ shipped: 1 });
   });
 
   test("throws error if empty request body", async function () {
@@ -40,6 +48,8 @@ describe("POST /", function () {
     });
   });
 });
+
+
 
 
 
